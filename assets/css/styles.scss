@@ -1,0 +1,205 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+html {
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 62.5%;
+  font-family: 'Karla',Arial, Helvetica, sans-serif;
+  background-color: #216093;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+input:focus,
+a:focus {
+  outline: 0;
+}
+
+.main-wrapper,
+header,
+nav,
+main,
+section,
+article{
+  position: relative;
+  float:left;
+}
+
+.main-wrapper,
+header,
+main,
+section,
+article,
+.content-wrap,
+footer {
+  width:100%;
+}
+
+footer  {
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+
+.main-wrapper,
+main {
+  min-height:100%;
+  overflow:hidden;
+}
+
+main {
+  padding:0 0 0 0;
+}
+
+  .content-wrap {
+    position:relative;
+    max-width:960px;
+    width:100%;
+    margin:0 auto;
+    padding:0 2%;
+    float:none;
+  }
+
+$blue-dark:#14091e;
+
+.main-wrapper {
+  background:$blue-dark;
+}
+
+
+$flex:(
+  flex:flex,
+  inline:inline-flex
+);
+@each $key, $value in $flex{
+  %#{$key}{
+    display: #{$value};
+  }
+  .#{$key}{
+    @extend %#{$key};
+  }
+};
+//  flex-direction: row | row-reverse | column | column-reverse;
+$flexDirection:(
+  row:row,
+  column:column
+);
+@each $key, $value in $flexDirection{
+  %#{$key}{
+    flex-direction: #{$value};
+  }
+  .#{$key}{
+    @extend %#{$key};
+  }
+};
+
+.wrap {
+  flex-wrap:wrap;
+}
+// justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+$justifyContent:(
+  flex-start:flex-start,
+  flex-end:flex-end,
+  flex-center:center,
+  space-between:space-between,
+  space-around:space-around
+);
+@each $key, $value in $justifyContent{
+  %#{$key}{
+    justify-content: #{$value};
+  }
+  .#{$key}{
+    @extend %#{$key};
+  }
+};
+
+// align-items: stretch | flex-start | flex-end | center | baseline;
+$alignItems:(
+  y-flex-start:flex-start,
+  y-flex-end:flex-end,
+  y-flex-center:center,
+  y-flex-baseline:baseline,
+);
+@each $key, $value in $alignItems{
+  %#{$key}{
+    align-items: #{$value};
+  }
+  .#{$key}{
+    @extend %#{$key};
+  }
+};
+
+$xlg: '1920px';
+$lg:'1280px';
+$md:'1080px';
+$sm:'780px';
+$xsm:'480px';
+
+@mixin media($n){
+    @media only screen and (max-width:#{$n}){
+        @content;
+    }
+} 
+
+
+//Cabezal
+
+.cabezal {
+  width: 100%;
+  height: 20vh;
+  text-align: center;
+  border-bottom: 2px solid white;
+  img {
+    max-height: 100%;
+    width: auto;
+  }
+}
+
+ul {
+  text-align: center;
+  list-style: none;
+}
+
+.proximamente, .voto, .resultados, .admin {
+  width: 100%;
+  height: 80vh;
+  padding: 15px;
+  color: white;
+  h2 {
+    font-size: 3em;
+    padding: 0 10px 40px;
+  }
+  h3 {
+    font-size: 2em;
+    line-height: 1.5;
+    padding: 0 10px;
+  }
+}
+.resultados h2 {
+  text-align: center;
+}
+.admin input {
+  width: 20px;
+  height: 20px;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Describe tu sitio"/>
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="./assets/css/normalize.css" type="text/css" /> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styles.css" type="text/css" /> 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>La Fiesta del Siglo</title>
+  </head>
+  <body>
+    <div class="wrap flex full-width full-height" id="app">
+      <template>
+          <app-cabezal></app-cabezal>
+          <main role="main">
+            <router-view></router-view>
+          </main>
+      </template>
+    </div>
+ <!-- The core Firebase JS SDK is always required and must be listed first 
+<script src="/__/firebase/7.1.0/firebase-app.js"></script>-->
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- Initialize Firebase 
+<script src="/__/firebase/init.js"></script> -->
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/vue"> </script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/vuex"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="assets/js/main.js"></script>
+
+
+</html>
