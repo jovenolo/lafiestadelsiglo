@@ -1,6 +1,6 @@
 const store = new Vuex.Store({
     state:{
-        proximamente: false,
+        proximamente: true,
         voto: false,
         resultados: true,
     },
