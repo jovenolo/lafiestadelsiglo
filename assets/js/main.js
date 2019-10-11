@@ -1,7 +1,7 @@
 const store = new Vuex.Store({
     state:{
-        proximamente: true,
-        voto: false,
+        proximamente: false,
+        voto: true,
         resultados: true,
     },
     mtnProximamente(state, n){
