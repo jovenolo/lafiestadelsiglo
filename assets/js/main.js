@@ -136,8 +136,7 @@ Vue.component('app-voto',{
         }
     },
     methods:{
-        // Get a reference to the database service
-        var database = firebase.database();
+        
     },
     mounted(){
         var lasCookies = document.cookie;
