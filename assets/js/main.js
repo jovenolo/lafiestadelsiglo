@@ -4,14 +4,16 @@ const store = new Vuex.Store({
         voto: true,
         resultados: true,
     },
-    mtnProximamente(state, n){
-        state.proximamente = n;
-    },
-    mtnVoto(state, n){
-        state.voto = n;
-    },
-    mtnResutlados(state, n){
-        state.resultados = n;
+    mutations:{
+        mtnProximamente(state, n){
+            state.proximamente = n;
+        },
+        mtnVoto(state, n){
+            state.voto = n;
+        },
+        mtnResultados(state, n){
+            state.resultados = n;
+        },
     },
     getters:{
         getProximamente(state){
@@ -45,12 +47,12 @@ const voto = {
     <div :class="disfraz">
         <app-proximamente></app-proximamente>    
         <app-voto>
-            <h3>Votaste por el disfraz Nº ${this.id}</h3>
+            <h3 id="votoEfectuado">Votaste por el disfraz Nº {{disfraz}}</h3>
         </app-voto>
     </div>`,
     computed:{
         disfraz(){
-            return `estilo-${this.id}`
+            return `${this.id}`
         }
     }
 };
@@ -118,8 +120,9 @@ Vue.component('app-voto',{
     },
     template:`
     <div :class="[mainClass]" v-if="isShow">    
-        <h2>Voto registrado</h2>
+        <h2 id="votoRegistrado">Tu voto quedó registrado</h2>
         <slot></slot>
+        <h3 id="votosRestantes"></h3>
     </div>
     `,
     data(){
@@ -132,6 +135,32 @@ Vue.component('app-voto',{
             return store.getters.getVoto;
         }
     },
+    methods:{
+        // Get a reference to the database service
+        var database = firebase.database();
+    },
+    mounted(){
+        var lasCookies = document.cookie;
+        if (lasCookies){
+            cantidadVotos = parseInt(lasCookies.substring(14));
+            if (cantidadVotos === 3) {
+                document.getElementById("votoRegistrado").innerHTML = "Ya votaste 3 veces";
+                document.getElementById("votoEfectuado").innerHTML = "";
+            } else {
+                cantidadVotos = cantidadVotos+1;
+                document.cookie = "cantidadVotos="+ cantidadVotos;
+                if (cantidadVotos === 3) {
+                    document.getElementById("votosRestantes").innerHTML = "Este fue tu último voto. Te avisaremos cuando estén los resultados.";
+                } else {
+                    document.getElementById("votosRestantes").innerHTML = "Te queda otro voto más.";
+                } 
+            }
+        } else {
+            document.cookie = "cantidadVotos=1; max-age=86400; path=/";
+            document.getElementById("votosRestantes").innerHTML = "Te quedan 2 votos.";
+        }
+    }
+    
 });
 Vue.component('app-resultados',{
     props:{
@@ -141,7 +170,10 @@ Vue.component('app-resultados',{
         }
     },
     template:`
-        <div :class="[mainClass]" v-if="isShow">    
+        <div :class="[mainClass]" v-if="!isShow">    
+            <h2>Los resultados todavía no están prontos. Te avisaremos cuando estén disponibles</h2>
+        </div>
+        <div :class="[mainClass]" v-else-if="isShow">    
             <h2>Estos son los disfraces más votados</h2>
         </div>
     `,
@@ -170,6 +202,14 @@ Vue.component('app-admin',{
                 <input @click="updateCheckProximamente()" type="checkbox" :checked="checkProximamente" id="proximamente">
                 <label for="proximamente">Aplicación en pausa</label>
             </h3>
+            <h3>
+                <input @click="updateCheckVoto()" type="checkbox" :checked="checkVoto" id="voto">
+                <label for="voto">Votación habilitada</label>
+            </h3>
+            <h3>
+                <input @click="updateCheckResultados()" type="checkbox" :checked="checkResultados" id="resultados">
+                <label for="resultados">Resultados habilitados</label>
+            </h3>
         </div>
     `,
     data(){
@@ -179,16 +219,34 @@ Vue.component('app-admin',{
     computed:{
         checkProximamente(){
             return store.getters.getProximamente;
+        },
+        checkVoto(){
+            return store.getters.getVoto;
+        },
+        checkResultados(){
+            return store.getters.getResultados;
         }
     },
     methods:{
         updateCheckProximamente(){
             if (store.getters.getProximamente) {
-                alert ("chequeado");
-                //return store.dispatch('updateProximamente', true);
+                return store.dispatch('updateProximamente', false);
             } else {
-                alert ("no chequeado");
                 return store.dispatch('updateProximamente', true);
+            }
+        },
+        updateCheckVoto(){
+            if (store.getters.getVoto) {
+                return store.dispatch('updateVoto', false);
+            } else {
+                return store.dispatch('updateVoto', true);
+            }
+        },
+        updateCheckResultados(){
+            if (store.getters.getResultados) {
+                return store.dispatch('updateResultados', false);
+            } else {
+                return store.dispatch('updateResultados', true);
             }
         },
     }
